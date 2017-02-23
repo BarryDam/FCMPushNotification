@@ -7,15 +7,14 @@ Google Firebase Cloud Messaging (FCM) Push Notifications php class to send push 
 2. Go to your "project settings" and go to the "Cloud Messaging" tab.
 3. Copy your api key "Serverkey".
 
-## Starting
-```php
-	require require 'FCMPushNotification.php'; 
-	$FCMPushNotification = new \BD\FCMPushNotification('YOUR_GOOGLE_FIREBASE_APIKEY');
-```
-
 ## Send to device example
 ```php
+	require require 'FCMPushNotification.php'; 
+	
+	$FCMPushNotification = new \BD\FCMPushNotification('YOUR_GOOGLE_FIREBASE_APIKEY');
+
 	$sDeviceToken = "DEVICE_TOKEN_ID";
+	
 	$aPayload = array(
 		'data' => array("test"=>123),
 		'notification' => array(
@@ -24,6 +23,7 @@ Google Firebase Cloud Messaging (FCM) Push Notifications php class to send push 
 			'sound'=> 'default'
 		)
 	);
+	
 	$aOptions = array(
 		'time_to_live' => 0 //means messages that can't be delivered immediately are discarded. 
 	);
@@ -33,6 +33,7 @@ Google Firebase Cloud Messaging (FCM) Push Notifications php class to send push 
 		$aPayload,
 		$aOptions // optional
 	);
+	
 	var_dump($aResult);
 ```
 [More info about payload and options settings](https://firebase.google.com/docs/cloud-messaging/http-server-ref)
