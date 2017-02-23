@@ -96,6 +96,12 @@
 			return $aReturn;
 		}
 
+		/**
+		 * Parses the options
+		 * @param  array $aOptions
+		 * @return array with only keys that can be used (self::$Options)
+		 * more info: https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+		 */
 		private static function _parseOptions($aOptions) 
 		{
 			if (! is_array($aOptions) || ! count($aOptions)) {
@@ -112,6 +118,11 @@
 			return $arrReturn;
 		}
 
+		/**
+		 * private send method
+		 * @param  array 	$aData send data
+		 * @return array 	server response data
+		 */
 		private function _send($aData)
 		{
 			// Prepare headers
@@ -135,12 +146,19 @@
 			if ($httpcode == "401") { // unauthorized
 				throw new FCMPushNotificationException("	There was an error authenticating the sender account.", 401);
 			} else if ($httpcode == "200") { // OK
-				return $result;	
+				return json_decode($result, true);	
 			} else { // Unkown
 				throw new FCMPushNotificationException($result, $httpcode);				
 			}
 		}
 
+		/**
+		 * Condition based push notification
+		 * @param  string $sCondition topic condition
+		 * @param  [type] $aPayload   [description]
+		 * @param  [type] $aOptions   [description]
+		 * @return [type]             [description]
+		 */
 		public function sendToCondition($sCondition, $aPayload, $aOptions = null) 
 		{
 			if (! is_string($sRegistrationToken)) {
@@ -153,11 +171,11 @@
 		}
 
 		/**
-		 * [sendToDevice description]
+		 * Send push notification to single device
 		 * @param  string	$sRegistrationToken The registation token comes from the client FCM SDKs
 		 * @param  array	$aPayload           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
 		 * @param  array	$aOptions           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
-		 * @return [type]                     [description]
+		 * @return array 	server response data
 		 */
 		public function sendToDevice($sRegistrationToken, $aPayload, $aOptions = null)
 		{
@@ -171,11 +189,11 @@
 		}
 
 		/**
-		 * [sendToDevices description]
-		 * @param  [type] $aRegistrationTokens [description]
-		 * @param  [type] $aPayload            [description]
-		 * @param  [type] $aOptions            [description]
-		 * @return [type]                      [description]
+		 * Send push notification to multiple devices
+		 * @param  array 	$aRegistrationTokens array with devices RegistrationTokens 
+		 * @param  array	$aPayload           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+		 * @param  array	$aOptions           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+		 * @return array 	server response data
 		 */
 		public function sendToDevices($aRegistrationTokens, $aPayload, $aOptions = null)
 		{
@@ -188,6 +206,13 @@
 			return $this->_send(array_merge($aData, $aOptions));
 		}
 
+		/**
+		 * Send push notification to group
+		 * @param  string	$sNotificationKey  group id
+		 * @param  array	$aPayload           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+		 * @param  array	$aOptions           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+		 * @return array 	server response data
+		 */
 		public function sendToDeviceGroup($sNotificationKey, $aPayload, $aOptions = null) {
 			if (! is_string($sNotificationKey)) {
 				throw new FCMPushNotificationException("Invalid NotificationKey");
@@ -198,6 +223,13 @@
 			return $this->_send(array_merge($aData, $aOptions));
 		}
 
+		/**
+		 * send to topic
+		 * @param  string	 $sTopic  			topic which devices can subscribe to
+		 * @param  array	$aPayload           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+		 * @param  array	$aOptions           see https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+		 * @return array 	server response data
+		 */
 		public function sendToTopic($sTopic, $aPayload, $aOptions = null)
 		{
 			if (! is_string($sTopic)) {
