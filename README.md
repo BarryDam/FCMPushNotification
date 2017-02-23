@@ -17,10 +17,10 @@ Google Firebase Cloud Messaging (FCM) Push Notifications php class to send push 
 ```php
 	$sDeviceToken = "DEVICE_TOKEN_ID";
 	$aPayload = array(
-		'data' => array("tet"=>123),
+		'data' => array("test"=>123),
 		'notification' => array(
-			'title' => 'pp',
-			'body'=> 'yes',
+			'title' => 'Example app',
+			'body'=> 'This is an example message',
 			'sound'=> 'default'
 		)
 	);
