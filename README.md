@@ -28,11 +28,12 @@ Google Firebase Cloud Messaging (FCM) Push Notifications php class to send push 
 		'time_to_live' => 0 //means messages that can't be delivered immediately are discarded. 
 	);
 
-	echo $FCMPushNotification->sendToDevice(
+	$aResult = $FCMPushNotification->sendToDevice(
 		$sDeviceToken,		
 		$aPayload,
 		$aOptions // optional
 	);
+	var_dump($aResult);
 ```
 [More info about payload and options settings](https://firebase.google.com/docs/cloud-messaging/http-server-ref)
 
