@@ -236,7 +236,7 @@
 				throw new FCMPushNotificationException("Invalid Topic");
 			}
 			$aData			= self::_parsePayload($aPayload);
-			$aData['to'] 	= 'topics/'.$sTopic;
+			$aData['to'] 	= '/topics/'.$sTopic;
 			$aOptions		= self::_parseOptions($aOptions);
 			return $this->_send(array_merge($aData, $aOptions));
 		}		
