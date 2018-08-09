@@ -161,7 +161,7 @@
 		 */
 		public function sendToCondition($sCondition, $aPayload, $aOptions = null) 
 		{
-			if (! is_string($sRegistrationToken)) {
+			if (! is_string($sCondition)) {
 				throw new FCMPushNotificationException("Invalid Condition");
 			}
 			$aData					= self::_parsePayload($aPayload);
