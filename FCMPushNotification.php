@@ -70,7 +70,9 @@
 		private static function _parsePayload($aPayload) 
 		{
 			if (
-				(! is_array($aPayload) || count($aPayload) === 0)
+				(! is_array($aPayload) || 
+				 
+				 ($aPayload) === 0)
 				|| (! (array_key_exists("data", $aPayload) || array_key_exists("notification", $aPayload)))
 			) {
 				throw new FCMPushNotificationException("Invalid Payload");
@@ -197,7 +199,7 @@
 		 */
 		public function sendToDevices($aRegistrationTokens, $aPayload, $aOptions = null)
 		{
-			if (! is_array($aRegistrationTokens) || count($aRegistrationTokens === 0)) {
+			if (! is_array($aRegistrationTokens) || count($aRegistrationTokens) === 0) {
 				throw new FCMPushNotificationException("Invalid RegistrationTokens");
 			}
 			$aData						= self::_parsePayload($aPayload);
